@@ -252,7 +252,7 @@ export const CardModal: React.FC<CardModalProps> = ({
                 flex items-center gap-2 px-3 py-2 rounded-lg border transition-all text-sm
                 ${
                   !assigneeId
-                    ? "border-sprint-accent-500 bg-sprint-accent-50 text-sprint-accent-600"
+                    ? "border-sprint-accent-500 bg-sprint-accent-900/40 text-sprint-accent-400"
                     : "border-sprint-border text-sprint-text-secondary hover:border-sprint-accent-300"
                 }
               `}
@@ -287,7 +287,7 @@ export const CardModal: React.FC<CardModalProps> = ({
                     flex items-center gap-2 px-3 py-2 rounded-lg border transition-all text-sm
                     ${
                       isSelected
-                        ? "border-sprint-accent-500 bg-sprint-accent-50 text-sprint-accent-600"
+                        ? "border-sprint-accent-500 bg-sprint-accent-900/40 text-sprint-accent-400"
                         : "border-sprint-border text-sprint-text-secondary hover:border-sprint-accent-300"
                     }
                   `}

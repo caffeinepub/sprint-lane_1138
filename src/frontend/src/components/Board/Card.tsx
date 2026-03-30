@@ -49,13 +49,13 @@ export const Card: React.FC<CardProps> = ({
         {/* Card Title */}
         <div className="flex items-start gap-2 mb-2">
           <div className="flex-1 min-w-0">
-            <h4 className="text-sm font-medium text-sprint-text-primary line-clamp-2 group-hover:text-sprint-accent-600 transition-colors">
+            <h4 className="text-sm font-medium text-sprint-text-primary line-clamp-2 group-hover:text-sprint-accent-400 transition-colors">
               {card.title}
             </h4>
           </div>
           {assignee && (
             <div
-              className="shrink-0 w-6 h-6 rounded-full bg-sprint-accent-100 flex items-center justify-center text-[10px] font-medium text-sprint-accent-600"
+              className="shrink-0 w-6 h-6 rounded-full bg-sprint-accent-800/50 flex items-center justify-center text-[10px] font-medium text-sprint-accent-300"
               title={`Assigned to ${assignee.userId.toString().slice(0, 8)}...`}
             >
               {getInitials(assignee.userId.toString())}
