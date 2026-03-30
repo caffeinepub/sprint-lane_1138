@@ -253,7 +253,7 @@ export const Column: React.FC<ColumnProps> = ({
                 }
               }}
               rows={2}
-              className="w-full text-sm resize-none border-0 focus:outline-none focus:ring-0 bg-sprint-surface text-sprint-text-primary placeholder:text-sprint-text-tertiary"
+              className="w-full text-sm resize-none rounded border-0 focus:outline-none focus:ring-0 bg-sprint-bg-primary text-sprint-text-primary placeholder:text-sprint-text-tertiary p-2"
             />
             <div className="flex gap-2 mt-2">
               <button
