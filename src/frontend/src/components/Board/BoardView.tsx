@@ -510,6 +510,30 @@ export const BoardView: React.FC<BoardViewProps> = ({
                 </svg>
               </button>
 
+              {/* Add Column Button */}
+              <button
+                type="button"
+                data-ocid="board.add_column.open_modal_button"
+                onClick={() => setIsCreatingColumn(true)}
+                className="p-2 hover:bg-sprint-bg-secondary hover:text-sprint-accent-500 rounded-lg text-sprint-text-secondary transition-all duration-150 active:scale-95"
+                title="Add column"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+              </button>
+
               {/* Board Menu */}
               <div className="relative">
                 <button
@@ -621,73 +645,71 @@ export const BoardView: React.FC<BoardViewProps> = ({
                 onColumnDrop={handleColumnDrop}
               />
             ))}
-
-            {/* Add Column Button */}
-            <div className="shrink-0 w-72">
-              {isCreatingColumn ? (
-                <div className="bg-sprint-surface rounded-xl shadow-sm p-3 border border-sprint-border">
-                  <input
-                    type="text"
-                    placeholder="Column name..."
-                    value={newColumnName}
-                    onChange={(e) => setNewColumnName(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") handleCreateColumn();
-                      if (e.key === "Escape") {
-                        setIsCreatingColumn(false);
-                        setNewColumnName("");
-                      }
-                    }}
-                    className="w-full px-3 py-2 text-sm bg-[#0F1117] text-white placeholder:text-gray-500 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-sprint-accent-500/30"
-                  />
-                  <div className="flex gap-2 mt-2">
-                    <button
-                      type="button"
-                      onClick={handleCreateColumn}
-                      disabled={!newColumnName.trim() || createColumn.isPending}
-                      className="flex-1 px-3 py-1.5 text-sm bg-sprint-accent-500 text-white rounded-lg hover:bg-sprint-accent-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                      {createColumn.isPending ? "Adding..." : "Add Column"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsCreatingColumn(false);
-                        setNewColumnName("");
-                      }}
-                      className="px-3 py-1.5 text-sm bg-sprint-bg-tertiary text-sprint-text-secondary rounded-lg hover:bg-sprint-bg-secondary transition-colors"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setIsCreatingColumn(true)}
-                  className="w-full h-12 bg-sprint-bg-secondary/50 hover:bg-sprint-bg-secondary border-2 border-dashed border-sprint-border hover:border-sprint-accent-400 rounded-xl flex items-center justify-center gap-2 text-sprint-text-tertiary hover:text-sprint-accent-500 transition-all duration-200 hover:scale-[1.02] active:scale-100"
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
-                  <span className="text-sm font-medium">Add Column</span>
-                </button>
-              )}
-            </div>
           </div>
         </div>
       </DragAndDropContext.Provider>
+
+      {/* New Column Modal */}
+      {isCreatingColumn && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setIsCreatingColumn(false);
+              setNewColumnName("");
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              setIsCreatingColumn(false);
+              setNewColumnName("");
+            }
+          }}
+          role="presentation"
+        >
+          <div className="bg-sprint-surface rounded-xl shadow-xl max-w-sm w-full p-6">
+            <h3 className="text-lg font-semibold text-sprint-text-primary mb-4">
+              New Column
+            </h3>
+            <input
+              type="text"
+              placeholder="Column name..."
+              value={newColumnName}
+              onChange={(e) => setNewColumnName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleCreateColumn();
+                if (e.key === "Escape") {
+                  setIsCreatingColumn(false);
+                  setNewColumnName("");
+                }
+              }}
+              // biome-ignore lint/a11y/noAutofocus: intentional focus for modal UX
+              autoFocus
+              className="w-full px-3 py-2 text-sm bg-[#0F1117] text-white placeholder:text-gray-500 rounded-lg border border-sprint-border focus:outline-none focus:ring-2 focus:ring-sprint-accent-500/30 mb-4"
+            />
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsCreatingColumn(false);
+                  setNewColumnName("");
+                }}
+                className="flex-1 px-4 py-2 bg-sprint-bg-secondary hover:bg-sprint-bg-tertiary text-sprint-text-primary rounded-lg transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleCreateColumn}
+                disabled={!newColumnName.trim() || createColumn.isPending}
+                className="flex-1 px-4 py-2 bg-sprint-accent-500 hover:bg-sprint-accent-600 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {createColumn.isPending ? "Adding..." : "Add Column"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
